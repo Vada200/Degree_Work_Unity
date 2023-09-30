@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class NumberGen : MonoBehaviour
 {
+    public Image[] checkBoxes;
     public TextMeshProUGUI num1Text;
     public TextMeshProUGUI num2Text;
     public TextMeshProUGUI opText;
@@ -18,14 +19,20 @@ public class NumberGen : MonoBehaviour
 
     public Sprite[] randPicSprites;
 
+    
+
     int num1 = 0;
     int num2 = 0;
     float result = 0;
     char[] ops = { '+', '-', '*', '/' };
-    
+
+    int guessesIndex = 0;
+
+
 
     void Start()
     {
+        CheckboxReset();
         GenerateRandomEqu();
     }
 
@@ -34,8 +41,18 @@ public class NumberGen : MonoBehaviour
     {
     }
 
+    public void CheckboxReset()
+    {
+        foreach (Image a in checkBoxes)
+        {
+            a.enabled = false;
+        }
+    }
+
     public void GenerateRandomEqu()
     {
+        
+        answer.text = "00";
         RandomImage();
         int opIndex = Random.Range(0, ops.Length);
         char randomOp = ops[opIndex];
@@ -76,11 +93,13 @@ public class NumberGen : MonoBehaviour
     {
         if (answer.text == helperText.text)
         {
-            Debug.Log("win");
+            //Debug.Log("win");
+            GoodGuess();
         }
         else
         {
-            Debug.Log("loss");
+            //Debug.Log("loss");
+            //BadGuess();
         }
 
         GenerateRandomEqu();
@@ -96,4 +115,18 @@ public class NumberGen : MonoBehaviour
         randPicThird.sprite = randPicSprites[randPicIndex];
     }
 
+    public void GoodGuess()
+    {
+        
+        Debug.Log(guessesIndex);
+        checkBoxes[guessesIndex].enabled = true;
+        guessesIndex++;
+
+        if (guessesIndex == 4)
+        {
+            //UnlockingAnimal();
+        }
+
+
+    }
 }
