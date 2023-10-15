@@ -6,14 +6,21 @@ using UnityEngine.UI;
 
 public class WordEvent : MonoBehaviour
 {
+
+    public Image[] checkBoxes;
     public TextMeshProUGUI randomThemeText;
     public TextMeshProUGUI randomWordText;
+    public TextMeshProUGUI helperText;
+    public TMP_InputField answer;
 
     public string[] animals;
     public string[] fruits;
     public string[] vegetables;
+
+    int guessesIndex = 0;
     void Start()
     {
+        CheckboxReset();
         ArraysInit();
         nextWord();
         
@@ -48,31 +55,35 @@ public class WordEvent : MonoBehaviour
     public void randomWord(string [] wordsArray)
     {
         int randWordIndex = Random.Range(0, wordsArray.Length);
-        Debug.Log(wordsArray[randWordIndex]);
+        //Debug.Log(wordsArray[randWordIndex]);
         //randomWordText.text = wordsArray[randWordIndex];
 
         //_---------------------------------------------------------------
         int randomLetterIndex = 0;
         int randomLetterIndex2 = 0;
-        while (randomLetterIndex == randomLetterIndex2)
+        int randomLetterIndex3 = 0;
+        while (randomLetterIndex == randomLetterIndex2 && randomLetterIndex2 == randomLetterIndex3 && randomLetterIndex == randomLetterIndex3)
         {
             randomLetterIndex = Random.Range(0, wordsArray[randWordIndex].Length);
             randomLetterIndex2 = Random.Range(0, wordsArray[randWordIndex].Length);
+            randomLetterIndex3 = Random.Range(0, wordsArray[randWordIndex].Length);
         }
-            if (wordsArray[randWordIndex].Length > 5)
+            if (wordsArray[randWordIndex].Length > 7)
             {
-
-                randomWordText.text = wordsArray[randWordIndex].Remove(randomLetterIndex, 1).Insert(randomLetterIndex, "_").Remove(randomLetterIndex2, 1).Insert(randomLetterIndex2, "_");
+            helperText.text = wordsArray[randWordIndex];
+            randomWordText.text = wordsArray[randWordIndex].Remove(randomLetterIndex, 1).Insert(randomLetterIndex, "_").Remove(randomLetterIndex2, 1).Insert(randomLetterIndex2, "_").Remove(randomLetterIndex3, 1).Insert(randomLetterIndex3, "_");
+        }
+            else if (wordsArray[randWordIndex].Length > 5 && wordsArray[randWordIndex].Length <= 7)
+            {
+            helperText.text = wordsArray[randWordIndex];
+            randomWordText.text = wordsArray[randWordIndex].Remove(randomLetterIndex, 1).Insert(randomLetterIndex, "_").Remove(randomLetterIndex2, 1).Insert(randomLetterIndex2, "_");
             }
             else if (wordsArray[randWordIndex].Length <= 5)
             {
-                randomWordText.text = wordsArray[randWordIndex].Remove(randomLetterIndex, 1).Insert(randomLetterIndex, "_");
+            helperText.text = wordsArray[randWordIndex];
+            randomWordText.text = wordsArray[randWordIndex].Remove(randomLetterIndex, 1).Insert(randomLetterIndex, "_");
             }
         
-        
-
-
-
     }
     public void ArraysInit()
     {
@@ -91,4 +102,35 @@ public class WordEvent : MonoBehaviour
         };
 
     }
+
+    public void CheckingAnswer()
+    {
+        if (answer.text == helperText.text)
+        {
+            //Debug.Log("Helyes");
+            GoodGuess();
+        }
+        else
+        {
+            //Debug.Log("Rósz");
+        }
+    }
+    public void CheckboxReset()
+    {
+        foreach (Image a in checkBoxes)
+        {
+            a.enabled = false;
+        }
+    }
+
+    public void GoodGuess()
+    {
+        Debug.Log("guessesIndex: "+ guessesIndex);
+        nextWord();
+        answer.text = "Válasz";
+
+        checkBoxes[guessesIndex].enabled = true;
+        guessesIndex++;
+    }
+    
 }

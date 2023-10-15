@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MathGame.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/WordGame.unity
+    guid: e18a716a2f50a8d4bb18ebb9bf4c47e1
+  - enabled: 1
+    path: Assets/Scenes/MemoryGame.unity
+    guid: e4fc76db84ae0c549890750cec32ff9f
   m_configObjects: {}
