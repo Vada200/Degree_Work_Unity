@@ -89,6 +89,8 @@ public class NumberGen : MonoBehaviour
         helperText.text = result.ToString();
     }
 
+
+
     public void guessNum()
     {
         if (answer.text == helperText.text)
