@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class NumberGen : MonoBehaviour
 {
+    
+    public Animator transToScoreboard;
+    public GameObject scoreUI;
+
     public Image[] checkBoxes;
     public TextMeshProUGUI num1Text;
     public TextMeshProUGUI num2Text;
@@ -19,7 +23,7 @@ public class NumberGen : MonoBehaviour
 
     public Sprite[] randPicSprites;
 
-    
+    string timePassed;
 
     int num1 = 0;
     int num2 = 0;
@@ -28,10 +32,12 @@ public class NumberGen : MonoBehaviour
 
     int guessesIndex = 0;
 
+    int badGuess = 0;
 
 
     void Start()
     {
+        scoreUI.active = false;
         CheckboxReset();
         GenerateRandomEqu();
     }
@@ -100,8 +106,7 @@ public class NumberGen : MonoBehaviour
         }
         else
         {
-            //Debug.Log("loss");
-            //BadGuess();
+            badGuess++;
         }
 
         GenerateRandomEqu();
@@ -120,15 +125,56 @@ public class NumberGen : MonoBehaviour
     public void GoodGuess()
     {
         
-        Debug.Log(guessesIndex);
-        checkBoxes[guessesIndex].enabled = true;
-        guessesIndex++;
-
-        if (guessesIndex == 4)
+        if (guessesIndex < 4)
         {
-            //UnlockingAnimal();
+            Debug.Log(guessesIndex);
+            checkBoxes[guessesIndex].enabled = true;
+            guessesIndex++;
+        }
+        else
+        {
+            StartCoroutine(TransToScore());
         }
 
+
+    }
+
+    public void DeleteUI()
+    {
+
+        GameObject.Find("Guesses").active = false;
+        GameObject.Find("Equation").active = false;
+        GameObject.Find("TimePassed").active = false;
+    }
+
+    public void ScoreUI()
+    {
+
+        scoreUI.active = true;
+
+        TMP_Text missesText = GameObject.Find("Misses").GetComponent<TMP_Text>();
+        TMP_Text timeText = GameObject.Find("Time").GetComponent<TMP_Text>();
+
+        missesText.text = "Wrong answers: "+ badGuess;
+        timeText.text = "Time: " + timePassed;
+
+
+    }
+
+    IEnumerator TransToScore()
+    {
+
+        timePassed = GameObject.Find("TimePassed").GetComponent<TMP_Text>().text;
+
+        transToScoreboard.SetTrigger("ToScoreBegin");
+
+        yield return new WaitForSeconds(1f);
+
+        DeleteUI();
+
+        transToScoreboard.SetTrigger("ToScoreEnd");
+
+        ScoreUI();
 
     }
 }

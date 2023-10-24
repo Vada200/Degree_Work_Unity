@@ -7,6 +7,10 @@ using UnityEngine.UI;
 public class MemoryGame : MonoBehaviour
 {
     // Start is called before the first frame update
+
+    public Animator transToScoreboard;
+    public GameObject scoreUI;
+
     public Sprite cardBack;
 
     public Transform CardBacks;
@@ -165,8 +169,44 @@ public class MemoryGame : MonoBehaviour
 
         if (countCorretGuesses == gameGuesses)
         {
-            Debug.Log("Win with "+countGuesses+" guesses");
+            StartCoroutine(TransToScore());
         }
+    }
+
+    public void DeleteUI()
+    {
+        GameObject.Find("CardBacks").active = false;
+
+    }
+
+    public void ScoreUI()
+    {
+
+        scoreUI.active = true;
+
+        //countGuesses
+
+        TMP_Text guessesText = GameObject.Find("Steps").GetComponent<TMP_Text>();
+
+        guessesText.text = "Won with guesses: " + countGuesses;
+
+
+    }
+
+    IEnumerator TransToScore()
+    {
+
+
+        transToScoreboard.SetTrigger("ToScoreBegin");
+
+        yield return new WaitForSeconds(1f);
+
+        DeleteUI();
+
+        transToScoreboard.SetTrigger("ToScoreEnd");
+
+        ScoreUI();
+
     }
 
     void RandomiseCards(List<Sprite> list)

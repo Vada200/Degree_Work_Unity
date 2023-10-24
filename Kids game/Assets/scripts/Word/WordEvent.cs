@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Linq;
 
 public class WordEvent : MonoBehaviour
 {
+    public Animator transToScoreboard;
+    public GameObject scoreUI;
 
     public Image[] checkBoxes;
     public TextMeshProUGUI randomThemeText;
@@ -17,7 +20,11 @@ public class WordEvent : MonoBehaviour
     public string[] fruits;
     public string[] vegetables;
 
-    int guessesIndex = 0;
+    //bool isTheSame = false;
+    int missedLetters = 0;
+
+
+    int goodGuessesIndex = 0;
     void Start()
     {
         CheckboxReset();
@@ -103,17 +110,59 @@ public class WordEvent : MonoBehaviour
 
     }
 
-    public void CheckingAnswer()
+    public bool SlicingWords(string a, string b)
     {
-        if (answer.text == helperText.text)
+        bool localCheck = false;
+        Debug.Log("Slice beg");
+        char[] answerLetters = a.ToCharArray();
+        char[] helperLetters = b.ToCharArray();
+
+        //isTheSame = false;
+        if (answerLetters.Length != helperLetters.Length)
         {
-            //Debug.Log("Helyes");
-            GoodGuess();
+
+            //isTheSame = false;
+            localCheck = false;
         }
         else
         {
-            //Debug.Log("Rósz");
+            for (int i = 0; i < answerLetters.Length; i++)
+            {
+                if (answerLetters[i] != helperLetters[i])
+                {
+                    missedLetters++;
+
+                    //isTheSame = false;
+                    localCheck = false;
+                }
+                else
+                {
+                    //isTheSame = true;
+                    localCheck = true;
+                }
+            }
+
         }
+
+        return localCheck;
+    }
+
+    public void CheckingAnswer()
+    {
+        Debug.Log("CheckingAnswer()-----------------------------------------------------");
+        //SlicingWords(answer.text, helperText.text);
+        if (SlicingWords(answer.text, helperText.text) == true)
+        {
+
+            GoodGuess();
+
+        }
+        else
+        {
+
+        }
+
+        Debug.Log("missedLetters: "+missedLetters);
     }
     public void CheckboxReset()
     {
@@ -125,12 +174,50 @@ public class WordEvent : MonoBehaviour
 
     public void GoodGuess()
     {
-        Debug.Log("guessesIndex: "+ guessesIndex);
+        //Debug.Log("Goodguess()");
+        //Debug.Log("guessesIndex: "+ guessesIndex);
         nextWord();
         answer.text = "Válasz";
 
-        checkBoxes[guessesIndex].enabled = true;
-        guessesIndex++;
+        checkBoxes[goodGuessesIndex].enabled = true;
+        goodGuessesIndex++;
+
+        if (goodGuessesIndex == 4)
+        {
+            StartCoroutine(TransToScore());
+
+        }
+
     }
-    
-}
+
+    public void DeleteUI()
+    {
+
+        GameObject.Find("CheckButton").active = false;
+        GameObject.Find("GreenChecks").active = false;
+        GameObject.Find("Texts").active = false;
+    }
+
+    public void ScoreUI()
+    {
+        scoreUI.active = true;
+
+        TMP_Text wrongLetters = GameObject.Find("Letters").GetComponent<TMP_Text>();
+
+        wrongLetters.text = "Missed letters: " + missedLetters;
+    }
+
+    IEnumerator TransToScore()
+    {
+        transToScoreboard.SetTrigger("ToScoreBegin");
+
+        yield return new WaitForSeconds(1f);
+
+        DeleteUI();
+
+        transToScoreboard.SetTrigger("ToScoreEnd");
+
+        ScoreUI();
+    }
+
+ }
