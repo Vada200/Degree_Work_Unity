@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.IO;
 
-public class MemoryGame : MonoBehaviour
+public class MemoryGame_hard : MonoBehaviour
 {
-    // Start is called before the first frame update
 
     public Animator transToScoreboard;
+    public Animator cardFlip;
+    public Animator balloonAnimation;
     public GameObject scoreUI;
 
     public Sprite cardBack;
@@ -34,9 +36,26 @@ public class MemoryGame : MonoBehaviour
     private string firstGuessCard, secondGuessCard;
     private int firstGuessIndex, secondGuessIndex;
 
+    public string filepath;
+
+    int unlockedAnimals;
+
     public void GetPics()
     {
         pics = Resources.LoadAll<Sprite>("Pieces");
+    }
+
+    public void UnlockingAnimal()
+    {
+        string[] lines = File.ReadAllLines(filepath);
+        if (unlockedAnimals <= 6)
+        {
+            unlockedAnimals = int.Parse(lines[1]);
+            unlockedAnimals++;
+
+            lines[1] = unlockedAnimals.ToString();
+        }
+        File.WriteAllLines(filepath, lines);
     }
 
     private void Awake()
@@ -50,8 +69,11 @@ public class MemoryGame : MonoBehaviour
             guard.transform.SetParent(CardBacks, false);
         }
     }
+    // Start is called before the first frame update
     void Start()
     {
+        filepath = Application.dataPath + "/animalUnlocks.txt";
+
         GetButtons();
         AddListener();
         AddPicturesToCard();
@@ -105,14 +127,19 @@ public class MemoryGame : MonoBehaviour
         //Ha a feléig elment a kép mennyiségnek akkor elõrõl kezdi, így mindenképp esz mindenkinek párja de csak az elsõ (buttons.Count/2) elemnek
     }
 
+
     public void CardOnClick()
     {
         //string name = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name; //get clicked name
-        
+
 
         //string index = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name.Substring(4);
         //Debug.Log("Clicked at: " + name+ " with index: "+index);
 
+        //StartCoroutine(FlippingCard());
+        //cardFlip.SetTrigger("flip");
+
+        balloonAnimation.Rebind();
         if (!firstGuess)
         {
             firstGuess = true;
@@ -135,23 +162,34 @@ public class MemoryGame : MonoBehaviour
         }
     }
 
-    IEnumerator IsItMatching()
+
+    //IEnumerator FlippingCard()
+    //{
+    //    cardFlip.SetTrigger("flip");
+    //    yield return new WaitForSeconds(0.30f);
+
+
+    //}
+        IEnumerator IsItMatching()
     {
+        balloonAnimation.ResetTrigger("baloonsUp");
         yield return new WaitForSeconds(1f);
 
         if (firstGuessCard == secondGuessCard)
         {
+            balloonAnimation.SetTrigger("baloonsUp");
             yield return new WaitForSeconds(0.5f);
 
             //Card gone
             buttons[firstGuessIndex].interactable = false; //no clickable
             buttons[secondGuessIndex].interactable = false;
 
-            buttons[firstGuessIndex].image.color = new Color(0,0,0,0); //rgb alpha
-            buttons[secondGuessIndex].image.color = new Color(0,0,0,0); //rgb alpha
+            buttons[firstGuessIndex].image.color = new Color(0, 0, 0, 0); //rgb alpha
+            buttons[secondGuessIndex].image.color = new Color(0, 0, 0, 0); //rgb alpha
 
             IsItFinished();
-        } else
+        }
+        else
         {
             yield return new WaitForSeconds(0.5f);
             buttons[firstGuessIndex].image.sprite = cardBack;
@@ -160,6 +198,7 @@ public class MemoryGame : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
+        
         firstGuess = secondGuess = false;
     }
 
@@ -188,14 +227,14 @@ public class MemoryGame : MonoBehaviour
 
         TMP_Text guessesText = GameObject.Find("Steps").GetComponent<TMP_Text>();
 
-        guessesText.text = "Won with guesses: " + countGuesses;
+        guessesText.text = "Nyertél " + countGuesses + " lépéssel";
 
 
     }
 
     IEnumerator TransToScore()
     {
-
+        UnlockingAnimal();
 
         transToScoreboard.SetTrigger("ToScoreBegin");
 
@@ -208,6 +247,7 @@ public class MemoryGame : MonoBehaviour
         ScoreUI();
 
     }
+
 
     void RandomiseCards(List<Sprite> list)
     {
@@ -226,4 +266,5 @@ public class MemoryGame : MonoBehaviour
         //i++
         //ez lényegében egy temp csere
     }
+
 }

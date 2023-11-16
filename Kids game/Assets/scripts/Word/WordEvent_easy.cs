@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.IO;
 
-public class WordEvent : MonoBehaviour
+public class WordEvent_easy : MonoBehaviour
 {
     public Animator transToScoreboard;
     public GameObject scoreUI;
@@ -24,7 +24,7 @@ public class WordEvent : MonoBehaviour
     //bool isTheSame = false;
     int missedLetters = 0;
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    private float countdownTime = 8.0f;
+    private float countdownTime = 15.0f;
     private float currentTime;
     private bool isCounting = false;
 
@@ -74,7 +74,7 @@ public class WordEvent : MonoBehaviour
             if (currentTime <= 0)
             {
             missedLetters++;
-            currentTime = 0;
+                currentTime = 0;
                 isCounting = false;
             nextWord();
             }

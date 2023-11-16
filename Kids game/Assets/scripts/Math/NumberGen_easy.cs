@@ -5,9 +5,9 @@ using TMPro;
 using UnityEngine.UI;
 using System.IO;
 
-public class NumberGen : MonoBehaviour
+public class NumberGen_easy : MonoBehaviour
 {
-    
+
     public Animator transToScoreboard;
     public GameObject scoreUI;
 
@@ -30,7 +30,7 @@ public class NumberGen : MonoBehaviour
     int num1 = 0;
     int num2 = 0;
     float result = 0;
-    char[] ops = { '+', '-', '*', '/' };
+    char[] ops = { '+', '-'};
 
     int guessesIndex = 0;
 
@@ -43,6 +43,7 @@ public class NumberGen : MonoBehaviour
     {
         string[] lines = File.ReadAllLines(filepath);
         unlockedAnimals = int.Parse(lines[1]);
+
         if (unlockedAnimals < 6)
         {
             
@@ -56,6 +57,7 @@ public class NumberGen : MonoBehaviour
         File.WriteAllLines(filepath, lines);
     }
 
+    // Start is called before the first frame update
     void Start()
     {
         filepath = Application.dataPath + "/animalUnlocks.txt";
@@ -67,6 +69,7 @@ public class NumberGen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
     }
 
     public void CheckboxReset()
@@ -79,7 +82,7 @@ public class NumberGen : MonoBehaviour
 
     public void GenerateRandomEqu()
     {
-        
+
         answer.text = "??";
         RandomImage();
         int opIndex = Random.Range(0, ops.Length);
@@ -88,26 +91,26 @@ public class NumberGen : MonoBehaviour
         switch (randomOp)
         {
             case '+':
-                num1 = Random.Range(0, 100);
-                num2 = Random.Range(0, (100 - num1 + 1)); //num2 nem lehet 100-num1nél (pl 60 + 40) mert 100-nál több nem lehet
+                num1 = Random.Range(0, 30);
+                num2 = Random.Range(0, (30 - num1 + 1)); //num2 nem lehet 50-num1nél (pl 10 + 20) mert 50-nál több nem lehet
                 result = num1 + num2;
                 break;
             case '-':
-                num1 = Random.Range(0, 100);
-                num2 = Random.Range(0, num1 + 1); //num2 mindenképp csak kisebb lehet num1-nél mert ne legyen minusz (40-60)
+                num1 = Random.Range(0, 30);
+                num2 = Random.Range(0, num1 + 1); //num2 mindenképp csak kisebb lehet num1-nél mert ne legyen minusz (30-10)
                 result = num1 - num2;
                 break;
-            case '*':
-                num1 = Random.Range(1, 11);
-                num2 = Random.Range(1, (100 / num1));
-                //num 2 kevesebb mint 100 és meg kell legyen benne maradék nélkül
-                result = num1 * num2;
-                break;
-            case '/':
-                num2 = Random.Range(1, 11);
-                num1 = num2 * Random.Range(1, 11); //num1 mindenképp nagyobb mint num1 és meg kell lennie maradék nélkül
-                result = num1 / num2;
-                break;
+            //case '*':
+            //    num1 = Random.Range(1, 10);
+            //    num2 = Random.Range(1, (100 / num1));
+            //    //num 2 kevesebb mint 100 és meg kell legyen benne maradék nélkül
+            //    result = num1 * num2;
+            //    break;
+            //case '/':
+            //    num2 = Random.Range(1, 10);
+            //    num1 = num2 * Random.Range(1, 11); //num1 mindenképp nagyobb mint num1 és meg kell lennie maradék nélkül
+            //    result = num1 / num2;
+            //    break;
         }
 
         num1Text.text = num1.ToString();
@@ -116,7 +119,6 @@ public class NumberGen : MonoBehaviour
 
         helperText.text = result.ToString();
     }
-
 
 
     public void guessNum()
@@ -135,6 +137,7 @@ public class NumberGen : MonoBehaviour
 
     }
 
+
     public void RandomImage()
     {
         int randPicIndex = Random.Range(0, randPicSprites.Length);
@@ -146,7 +149,7 @@ public class NumberGen : MonoBehaviour
 
     public void GoodGuess()
     {
-        
+
         if (guessesIndex < 4)
         {
             Debug.Log(guessesIndex);
@@ -161,6 +164,7 @@ public class NumberGen : MonoBehaviour
 
     }
 
+
     public void DeleteUI()
     {
 
@@ -168,6 +172,7 @@ public class NumberGen : MonoBehaviour
         GameObject.Find("Equation").active = false;
         GameObject.Find("TimePassed").active = false;
     }
+
 
     public void ScoreUI()
     {
@@ -178,7 +183,7 @@ public class NumberGen : MonoBehaviour
         TMP_Text timeText = GameObject.Find("Time").GetComponent<TMP_Text>();
 
         missesText.text = "Elrontott válaszok: " + badGuess;
-        timeText.text = "Teljesítetted " + mins + " perc " +secs + " másodperc alatt";
+        timeText.text = "Teljesítetted " + mins + " perc " + secs + " másodperc alatt";
 
 
     }

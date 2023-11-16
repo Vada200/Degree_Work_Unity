@@ -26,19 +26,35 @@ public class Buttons : MonoBehaviour
         StartCoroutine(LoadLevel(0));
     }
 
-    public void ToMathGame()
+
+    public void ToMathGame_Hard()
     {
         StartCoroutine(LoadLevel(2));
     }
-    public void ToWordGame()
+    public void ToMathGame_Easy()
     {
         StartCoroutine(LoadLevel(3));
     }
 
-    public void ToMemoryGame()
+    public void ToWordGame_hard()
     {
         StartCoroutine(LoadLevel(4));
+    }
+    public void ToWordGame_easy()
+    {
+        StartCoroutine(LoadLevel(5));
+    }
+
+    public void ToMemoryGame_Easy()
+    {
+        StartCoroutine(LoadLevel(7));
        
+    }
+
+    public void ToMemoryGame_Hard()
+    {
+        StartCoroutine(LoadLevel(6));
+
     }
 
     public void TogameChooseScene()

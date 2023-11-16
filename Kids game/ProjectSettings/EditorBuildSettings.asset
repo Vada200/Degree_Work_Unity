@@ -12,12 +12,21 @@ EditorBuildSettings:
     path: Assets/Scenes/game_choose.unity
     guid: 14fbfbb77888dd74db3489354ac33f61
   - enabled: 1
-    path: Assets/Scenes/MathGame.unity
+    path: Assets/Scenes/MathGame_hard.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/WordGame.unity
+    path: Assets/Scenes/MathGame_easy.unity
+    guid: a1d200b10ff74504ba095c0c6d0dfe0b
+  - enabled: 1
+    path: Assets/Scenes/WordGame_hard.unity
     guid: e18a716a2f50a8d4bb18ebb9bf4c47e1
   - enabled: 1
-    path: Assets/Scenes/MemoryGame.unity
+    path: Assets/Scenes/WordGame_easy.unity
+    guid: 3afa245216bbb394e829626c9ad0db7b
+  - enabled: 1
+    path: Assets/Scenes/MemoryGame_hard.unity
     guid: e4fc76db84ae0c549890750cec32ff9f
+  - enabled: 1
+    path: Assets/Scenes/MemoryGame_easy.unity
+    guid: 3ddf2faf49064214c9f1a0903f9171d8
   m_configObjects: {}

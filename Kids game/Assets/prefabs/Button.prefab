@@ -122,9 +122,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Buttons, Assembly-CSharp
-        m_MethodName: BackToMenu
+      - m_Target: {fileID: 23132180159438995, guid: 39d4c50ae9ec0c34aa965bcd5911237c, type: 3}
+        m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
+        m_MethodName: TogameChooseScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

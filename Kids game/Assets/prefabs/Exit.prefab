@@ -188,7 +188,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BACK
+  m_text: Vissza
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 51d2ac79a9e96f04180f58026e2f8785, type: 2}
   m_sharedMaterial: {fileID: 6910609293818874614, guid: 51d2ac79a9e96f04180f58026e2f8785, type: 2}
