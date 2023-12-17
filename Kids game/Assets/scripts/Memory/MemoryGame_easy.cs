@@ -71,7 +71,7 @@ public class MemoryGame_easy : MonoBehaviour
     void Start()
     {
 
-        filepath = Application.dataPath + "/animalUnlocks.txt";
+        filepath = Application.dataPath + "/TextFile/animalUnlocks.txt";
 
         GetButtons();
         AddListener();

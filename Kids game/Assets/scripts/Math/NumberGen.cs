@@ -58,7 +58,7 @@ public class NumberGen : MonoBehaviour
 
     void Start()
     {
-        filepath = Application.dataPath + "/animalUnlocks.txt";
+        filepath = Application.dataPath + "/TextFile/animalUnlocks.txt";
         scoreUI.active = false;
         CheckboxReset();
         GenerateRandomEqu();

@@ -60,7 +60,7 @@ public class NumberGen_easy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        filepath = Application.dataPath + "/animalUnlocks.txt";
+        filepath = Application.dataPath + "/TextFile/animalUnlocks.txt";
         scoreUI.active = false;
         CheckboxReset();
         GenerateRandomEqu();

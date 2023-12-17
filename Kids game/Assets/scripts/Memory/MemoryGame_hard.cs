@@ -72,7 +72,7 @@ public class MemoryGame_hard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        filepath = Application.dataPath + "/animalUnlocks.txt";
+        filepath = Application.dataPath + "/TextFile/animalUnlocks.txt";
 
         GetButtons();
         AddListener();

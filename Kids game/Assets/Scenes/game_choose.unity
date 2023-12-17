@@ -765,7 +765,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1312219987}
         m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
-        m_MethodName: ToWordGame_hard
+        m_MethodName: ToMemoryGame_Hard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

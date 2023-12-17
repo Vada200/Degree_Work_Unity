@@ -52,7 +52,7 @@ public class WordEvent_easy : MonoBehaviour
     void Start()
     {
 
-        filepath = Application.dataPath + "/animalUnlocks.txt";
+        filepath = Application.dataPath + "/TextFile/animalUnlocks.txt";
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //resetButton.onClick.AddListener(ResetTimer);
         ResetTimer();
